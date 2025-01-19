@@ -63,8 +63,8 @@ Logger::~Logger()
 
 void Logger::Init()
 {
-    mP7Client.reset(P7_Create_Client(TM("/P7.Pool=32768")));
-    if (mP7Client)
+    mP7Client.reset(P7_Create_Client(TM("/P7.Sink=Baical /P7.Addr=192.168.31.203")));
+    if (!mP7Client)
     {
         std::cerr << "Fail to create P7 client" << std::endl;
         return;

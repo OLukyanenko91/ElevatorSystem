@@ -1,11 +1,12 @@
-#include <QApplication>
-#include "MainWindow.hpp"
 #include "Logger/Logger.hpp"
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    while(true) {
+        lInfo() << "Test";
+        sleep(1);
+    }
+
+    return 0;
 }
