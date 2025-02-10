@@ -1,4 +1,6 @@
 #include <cassert>
+#include <SettingsLoader.hpp>
+#include <fmt/core.h>
 #include "Logger.hpp"
 
 
@@ -63,7 +65,16 @@ Logger::~Logger()
 
 void Logger::Init()
 {
-    mP7Client.reset(P7_Create_Client(TM("/P7.Sink=Baical /P7.Addr=192.168.31.203")));
+    auto settings = SettingsLoader::GetSettings().logging;
+    auto p7ArgsTemplate = "/P7.Sink={} /P7.Addr={} /P7.Port={} /P7.Roll={} /P7.Files={} /P7.FSize={}";
+    auto p7Args = fmt::format(p7ArgsTemplate, settings.type,
+                                              settings.receiver,
+                                              settings.port,
+                                              settings.maxFileSize,
+                                              settings.maxFiles,
+                                              settings.maxFilesSizeMB);
+
+    mP7Client.reset(P7_Create_Client(TM(p7Args.c_str())));
     if (!mP7Client)
     {
         std::cerr << "Fail to create P7 client" << std::endl;
