@@ -1,6 +1,7 @@
 add_library(Logger STATIC
     Logger.cpp
     Logger.hpp
+
 )
 
 find_package(fmt REQUIRED)
