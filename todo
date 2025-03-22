@@ -1,3 +1,9 @@
 + Add logging
 + Add config file
 + Add version
+- Add Elevator SM
+- Add working thread
+- Add Elevator status notification
+- Add Floor updates according to Elevator status
+- Add statuses (all) sending to UDP
+- Add UDP commands handling

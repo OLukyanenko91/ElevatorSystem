@@ -11,7 +11,7 @@ add_subdirectory(src/Logger)
 set(PROJECT_SOURCES
         main.cpp
         version.hpp
-        src/Elevator.hpp src/Elevator.cpp
+        src/Elevator/Elevator.hpp src/Elevator/Elevator.cpp
         src/Manager.hpp src/Manager.cpp
         src/Service.hpp src/Service.cpp
         src/Floor.hpp src/Floor.cpp
