@@ -1,3 +1,6 @@
 #include "Floor.hpp"
 
-Floor::Floor() {}
+
+Floor::Floor(const uint8_t number)
+    : mNumber(number)
+{}

@@ -5,6 +5,7 @@ namespace SettingsKeys
 {
     // KEY -> VALUE
     constexpr auto SERVICE               = "Service";
+    constexpr auto FLOORS_COUNT          = "FloorsCount";
     constexpr auto TYPE                  = "Type";
     constexpr auto NAME                  = "Name";
     constexpr auto RECEIVER              = "Receiver";

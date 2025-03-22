@@ -19,6 +19,7 @@ struct LoggingSettings
 struct Settings
 {
     std::string     service;
+    uint8_t         floorsCount {0};
     LoggingSettings logging;
 
     bool valid {false};

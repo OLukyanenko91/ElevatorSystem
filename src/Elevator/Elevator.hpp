@@ -78,6 +78,8 @@ class Elevator
     using aBool        = std::atomic<bool>;
     using cVariable    = std::condition_variable;
 
+    friend class Service;
+
 public:
     Elevator();
     ~Elevator();
@@ -91,7 +93,7 @@ public:
 
 private:
     void AddAction(const ElevatorData::Action& action);
-    void ProcessActions();
+    void Run();
 
 private:
     ActionsQueue mActionsQueue;

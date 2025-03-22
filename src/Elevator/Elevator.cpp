@@ -1,7 +1,6 @@
 #include <Logger.hpp>
 #include "Elevator.hpp"
 
-
 #define LOG_MODULE_NAME "Elevator"
 
 
@@ -39,7 +38,7 @@ std::ostream& ElevatorData::operator<<(std::ostream& cout,
 
 Elevator::Elevator()
 {
-    mProcessingThread = std::thread(&Elevator::ProcessActions, this);
+    mProcessingThread = std::thread(&Elevator::Run, this);
 }
 
 Elevator::~Elevator()
@@ -89,15 +88,14 @@ void Elevator::AddAction(const ElevatorData::Action& action)
     {
         const std::lock_guard<std::mutex> lock(mActionsQueueMutex);
         mActionsQueue.push(action);
-        lmInfo() << "Queue size: " << mActionsQueue.size();
     }
 
     mProcessingCVariable.notify_one();
 }
 
-void Elevator::ProcessActions()
+void Elevator::Run()
 {
-    lmInfo() << "Process actions";
+    lmInfo() << "Run";
 
     while(mProcessingRunning) {
         std::unique_lock<std::mutex> locker(mActionsQueueMutex);

@@ -1,24 +1,21 @@
 #pragma once
 
-#include <cstdint>
-#include <map>
-#include "Floor.hpp"
 #include "Elevator/Elevator.hpp"
+#include "src/Service.hpp"
+#include "src/Common.hpp"
 
 
 class Manager
 {
-    using FloorsMap = std::map<uint8_t, Floor>;
-
-    friend class Service;
-
 public:
     Manager();
 
-public:
-    void StartSystem();
+private:
+    void GenerateFloors();
 
 private:
+    std::unique_ptr<Elevator> mElevator;
+    std::unique_ptr<Service>  mService;
+
     FloorsMap mFloors;
-    Elevator  mElevator;
 };

@@ -1,5 +1,6 @@
 {
     "Service": "192.168.31.203",
+    "FloorsCount": 5,
     "Logging": {
         "Type": "Baical",
         "InstanceName": "ElevatorSystem",

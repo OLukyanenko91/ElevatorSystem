@@ -1,13 +1,21 @@
 #pragma once
 
-#include "Manager.hpp"
+#include "src/Elevator/Elevator.hpp"
+#include "src/Common.hpp"
 
 
 class Service
 {
 public:
-    explicit Service(Manager& manager);
+    explicit Service(Elevator& elevator,
+                     FloorsMap& floors);
 
 private:
-    Manager& mManager;
+    void Run();
+
+private:
+    Elevator&  mElevator;
+    FloorsMap& mFloors;
+
+    std::thread mProcessingThread;
 };

@@ -35,6 +35,7 @@ Settings SettingsLoader::Load()
         json data = json::parse(config);
 
         return Settings {LoadValue<std::string>(data, SERVICE, ROOT, VALUE_TYPE_STR),
+                         LoadValue<uint8_t>(data, FLOORS_COUNT, ROOT, VALUE_TYPE_NUM),
                          LoadLoggingSettings(data),
                          true};
     }

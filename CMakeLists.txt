@@ -15,6 +15,7 @@ set(PROJECT_SOURCES
         src/Manager.hpp src/Manager.cpp
         src/Service.hpp src/Service.cpp
         src/Floor.hpp src/Floor.cpp
+        src/Common.hpp
 )
 
 add_executable(ElevatorSystem
