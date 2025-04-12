@@ -32,44 +32,6 @@ namespace ElevatorData
     std::ostream& operator<<(std::ostream& cout, ActionType type);
 }
 
-////////////// ELEVATOR SM //////////////
-
-namespace ElevatorSM
-{
-    class Elevator;
-
-    class State
-    {
-    public:
-        State(Elevator& elevator);
-
-    public:
-        virtual void CallElevatorAction() = 0;
-        virtual void GoToFloorAction() = 0;
-        virtual void OpenDoorAction() = 0;
-        virtual void CloseDoorAction() = 0;
-
-    private:
-        Elevator& mElevator;
-    };
-
-    class IdleState : public State
-    {
-        void CallElevatorAction() override;
-        void GoToFloorAction() override;
-        void OpenDoorAction() override;
-        void CloseDoorAction() override;
-    };
-
-    class MovingState : public State
-    {
-        void CallElevatorAction() override;
-        void GoToFloorAction() override;
-        void OpenDoorAction() override;
-        void CloseDoorAction() override;
-    };
-}
-
 ////////////// ELEVATOR //////////////
 
 class Elevator
@@ -94,6 +56,12 @@ public:
 private:
     void AddAction(const ElevatorData::Action& action);
     void Run();
+    void SetCurrentFloor(const uint8_t floor);
+
+    void ProcessCalledFromFloorAction(const uint8_t floor);
+    void ProcessGoToFloorAction(const uint8_t floor);
+    void ProcessOpenDoorAction();
+    void ProcessCloseDoorAction();
 
 private:
     ActionsQueue mActionsQueue;
@@ -102,4 +70,6 @@ private:
     std::thread mProcessingThread;
     aBool       mProcessingRunning {true};
     cVariable   mProcessingCVariable;
+
+    uint8_t mCurrentFloor {0};
 };

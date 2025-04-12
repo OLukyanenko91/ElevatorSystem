@@ -65,19 +65,19 @@ void Elevator::GoToFloor(const uint8_t floor)
 
 void Elevator::CloseDoor()
 {
-    lmInfo() << "Close door";
+    lmEnter();
     AddAction(ElevatorData::Action {ElevatorData::ActionType::CloseDoor});
 }
 
 void Elevator::OpenDoor()
 {
-    lmInfo() << "Open door";
+    lmEnter();
     AddAction(ElevatorData::Action {ElevatorData::ActionType::OpenDoor});
 }
 
 void Elevator::Stop()
 {
-    lmInfo() << "Stop";
+    lmEnter();
     AddAction(ElevatorData::Action {ElevatorData::ActionType::Stop});
 }
 
@@ -95,9 +95,10 @@ void Elevator::AddAction(const ElevatorData::Action& action)
 
 void Elevator::Run()
 {
-    lmInfo() << "Run";
+    lmEnter();
 
     while(mProcessingRunning) {
+        // Wait new actions
         std::unique_lock<std::mutex> locker(mActionsQueueMutex);
         mProcessingCVariable.wait(locker, [this] { return !mActionsQueue.empty(); });
         locker.unlock();
@@ -108,8 +109,64 @@ void Elevator::Run()
             mActionsQueue.pop();
             locker.unlock();
 
-            lmInfo() << "Process action: " << action.type;
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            lmInfo() << "Process action " << action.type << ", value " << int(action.floor);
+            if (action.type == ElevatorData::ActionType::CalledFromFloor) {
+                ProcessCalledFromFloorAction(action.floor);
+            }
+            else if (action.type == ElevatorData::ActionType::GoToFloor) {
+                ProcessGoToFloorAction(action.floor);
+            }
         }
     }
+}
+
+void Elevator::SetCurrentFloor(const uint8_t floor)
+{
+    lmInfo() << "Set current floor " << int(floor);
+    mCurrentFloor = floor;
+    lmInfo() << "Current floor is " << int(mCurrentFloor);
+}
+
+void Elevator::ProcessCalledFromFloorAction(const uint8_t floor)
+{
+    lmInfo() << "Process called from floor action " << int(floor);
+
+    while (mCurrentFloor != floor) {
+        SetCurrentFloor(floor > mCurrentFloor ? mCurrentFloor + 1 : mCurrentFloor - 1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
+
+    ProcessOpenDoorAction();
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    ProcessCloseDoorAction();
+}
+
+void Elevator::ProcessGoToFloorAction(const uint8_t floor)
+{
+    lmInfo() << "Process go to floor action " << int(floor);
+
+    while (mCurrentFloor != floor) {
+        SetCurrentFloor(floor > mCurrentFloor ? mCurrentFloor + 1 : mCurrentFloor - 1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
+
+    ProcessOpenDoorAction();
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    ProcessCloseDoorAction();
+}
+
+void Elevator::ProcessOpenDoorAction()
+{
+    lmEnter();
+
+    // open internal door
+    // manager -> open external door
+}
+
+void Elevator::ProcessCloseDoorAction()
+{
+    lmEnter();
+
+    // close internal door
+    // manager -> close external door
 }

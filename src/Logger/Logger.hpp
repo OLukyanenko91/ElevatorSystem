@@ -12,12 +12,13 @@
 #define lmWarning() Logger::Instance().Log(EP7TRACE_LEVEL_WARNING, __LINE__, __FILE__, __FUNCTION__, LOG_MODULE_NAME)
 #define lmError() Logger::Instance().Log(EP7TRACE_LEVEL_ERROR, __LINE__, __FILE__, __FUNCTION__, LOG_MODULE_NAME)
 #define lmCritical() Logger::Instance().Log(EP7TRACE_LEVEL_CRITICAL, __LINE__, __FILE__, __FUNCTION__, LOG_MODULE_NAME)
+#define lmEnter() Logger::Instance().Log(EP7TRACE_LEVEL_INFO, __LINE__, __FILE__, __FUNCTION__, LOG_MODULE_NAME) << "Enter"
 #define lDebug() Logger::Instance().Log(EP7TRACE_LEVEL_DEBUG, __LINE__, __FILE__, __FUNCTION__)
 #define lInfo() Logger::Instance().Log(EP7TRACE_LEVEL_INFO, __LINE__, __FILE__, __FUNCTION__)
 #define lWarning() Logger::Instance().Log(EP7TRACE_LEVEL_WARNING, __LINE__, __FILE__, __FUNCTION__)
 #define lError() Logger::Instance().Log(EP7TRACE_LEVEL_ERROR, __LINE__, __FILE__, __FUNCTION__)
 #define lCritical() Logger::Instance().Log(EP7TRACE_LEVEL_CRITICAL, __LINE__, __FILE__, __FUNCTION__)
-
+#define lEnter() Logger::Instance().Log(EP7TRACE_LEVEL_INFO, __LINE__, __FILE__, __FUNCTION__) << "Enter"
 
 class Logger
 {
