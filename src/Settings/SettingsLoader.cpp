@@ -34,8 +34,8 @@ Settings SettingsLoader::Load()
         std::ifstream config(CONFIG_NAME);
         json data = json::parse(config);
 
-        return Settings {LoadValue<std::string>(data, SERVICE, ROOT, VALUE_TYPE_STR),
-                         LoadValue<uint8_t>(data, FLOORS_COUNT, ROOT, VALUE_TYPE_NUM),
+        return Settings {LoadValue<uint8_t>(data, FLOORS_COUNT, ROOT, VALUE_TYPE_NUM),
+                         LoadServiceSettings(data),
                          LoadLoggingSettings(data),
                          true};
     }
@@ -49,10 +49,16 @@ Settings SettingsLoader::Load()
     return Settings();
 }
 
+ServiceSettings SettingsLoader::LoadServiceSettings(const json& settingsJson)
+{
+    json serviceSettingsJson = LoadValue<json>(settingsJson, SERVICE, ROOT, VALUE_TYPE_OBJ);
+    return ServiceSettings {LoadValue<std::string>(serviceSettingsJson, HOST, SERVICE, VALUE_TYPE_STR),
+                            LoadValue<uint16_t>(serviceSettingsJson, PORT, SERVICE, VALUE_TYPE_NUM)};
+}
+
 LoggingSettings SettingsLoader::LoadLoggingSettings(const json& settingsJson)
 {
     json loggingSettingsJson = LoadValue<json>(settingsJson, LOGGING, ROOT, VALUE_TYPE_OBJ);
-
     return LoggingSettings {LoadValue<std::string>(loggingSettingsJson, TYPE, LOGGING, VALUE_TYPE_STR),
                             LoadValue<std::string>(loggingSettingsJson, NAME, LOGGING, VALUE_TYPE_STR),
                             LoadValue<std::string>(loggingSettingsJson, RECEIVER, LOGGING, VALUE_TYPE_STR),

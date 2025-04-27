@@ -33,6 +33,7 @@ private:
 
 private:
     static Settings        Load();
+    static ServiceSettings LoadServiceSettings(const json& settingsJson);
     static LoggingSettings LoadLoggingSettings(const json& settingsJson);
 
     template <typename T>

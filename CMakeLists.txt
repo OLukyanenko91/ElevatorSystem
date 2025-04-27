@@ -13,7 +13,9 @@ set(PROJECT_SOURCES
         version.hpp
         src/Elevator/Elevator.hpp src/Elevator/Elevator.cpp
         src/Manager.hpp src/Manager.cpp
-        src/Service.hpp src/Service.cpp
+        src/Service/Service.hpp src/Service/Service.cpp
+        src/Service/MAVLinkHandler.hpp src/Service/MAVLinkHandler.cpp
+        src/Service/UDPLink.hpp src/Service/UDPLink.cpp
         src/Floor.hpp src/Floor.cpp
         src/Common.hpp
 )
@@ -32,3 +34,7 @@ include_directories(${CMAKE_BINARY_DIR})
 target_link_libraries(ElevatorSystem PRIVATE Logger)
 target_link_libraries(ElevatorSystem PRIVATE Settings)
 target_link_libraries(ElevatorSystem PRIVATE p7)
+
+target_include_directories(ElevatorSystem PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Service/MAVLink/include
+)

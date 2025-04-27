@@ -3,6 +3,13 @@
 #include <string>
 
 
+struct ServiceSettings
+{
+    std::string host;
+    uint16_t    port {14550};
+};
+
+
 struct LoggingSettings
 {
     std::string type {"FileBin"};
@@ -18,8 +25,8 @@ struct LoggingSettings
 
 struct Settings
 {
-    std::string     service;
     uint8_t         floorsCount {0};
+    ServiceSettings service;
     LoggingSettings logging;
 
     bool valid {false};

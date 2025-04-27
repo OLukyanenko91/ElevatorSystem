@@ -4,8 +4,8 @@
 #include <mutex>
 #include <thread>
 #include <queue>
-#include <atomic>
 #include <condition_variable>
+#include "src/Common.hpp"
 
 
 ////////////// ELEVATOR DATA //////////////
@@ -37,7 +37,6 @@ namespace ElevatorData
 class Elevator
 {
     using ActionsQueue = std::queue<ElevatorData::Action>;
-    using aBool        = std::atomic<bool>;
     using cVariable    = std::condition_variable;
 
     friend class Service;
