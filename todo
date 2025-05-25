@@ -7,3 +7,8 @@
 - Add Floor updates according to Elevator status
 - Add statuses (all) sending to UDP
 - Add UDP commands handling
+
+...
+#fix incorrect reaction for commands with 5 floor
+add elevator system configuration request/response
+add current floor status

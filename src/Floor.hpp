@@ -3,13 +3,20 @@
 #include <cstdint>
 
 
+class Elevator;
+
 class Floor
 {
     friend class Service;
 
 public:
-    Floor(const uint8_t number);
+    Floor(uint8_t number,
+          Elevator& elevator);
 
 private:
-    uint8_t mNumber {0};
+    void CallButtonPushed();
+
+private:
+    uint8_t   mNumber {0};
+    Elevator& mElevator;
 };
