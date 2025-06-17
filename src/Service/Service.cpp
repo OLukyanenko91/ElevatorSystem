@@ -35,10 +35,14 @@ void Service::Run()
 
 void Service::CallFromFloorCmdReceived(const uint8_t floor)
 {
-    lmInfo() << "Call from floor command received, floor " << floor;
+    lmInfo() << "Call from floor command received, floor " << int(floor);
+    if (mFloors.find(floor) != mFloors.end()) {
+        mFloors[floor]->CallButtonPushed();
+    }
 }
 
 void Service::GoToFloorCmdReceived(const uint8_t floor)
 {
-    lmInfo() << "Go to floor command received, floor " << floor;
+    lmInfo() << "Go to floor command received, floor " << int(floor);
+    mElevator.GoToFloor(floor);
 }

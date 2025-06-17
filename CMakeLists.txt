@@ -36,5 +36,6 @@ target_link_libraries(ElevatorSystem PRIVATE Settings)
 target_link_libraries(ElevatorSystem PRIVATE p7)
 
 target_include_directories(ElevatorSystem PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Service/MAVLink/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Service/ElevatorMAVLink/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Service/ElevatorMAVLink/dialect_version
 )

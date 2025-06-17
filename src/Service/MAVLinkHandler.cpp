@@ -3,6 +3,7 @@
 #include "Service.hpp"
 #include "MAVLinkHandler.hpp"
 #include "elevator/mavlink.h"
+#include "dialect_version.h"
 
 #define LOG_MODULE_NAME "MAVLinkHandler"
 
@@ -17,7 +18,9 @@ namespace
 MAVLinkHandler::MAVLinkHandler(Service& commandHandler)
     : mUDPLink()
     , mCommandHandler(commandHandler)
-{}
+{
+    lmDebug() << "MAVLink dialect version: " << DIALECT_VERSION;
+}
 
 void MAVLinkHandler::StartHandling(const uint16_t localPort,
                                    const uint16_t remotePort,
@@ -59,18 +62,18 @@ void MAVLinkHandler::ProcessUDPData(const uint8_t* buffer,
             if (msg.msgid == MAVLINK_MSG_ID_HEARTBEAT) {
                 mavlink_heartbeat_t heartbeat;
                 mavlink_msg_heartbeat_decode(&msg, &heartbeat);
-                lmDebug() << "Heartbeat received";
+                lmDebug() << "MAVLINK_MSG_ID_HEARTBEAT message received";
             }
             else if (msg.msgid == MAVLINK_MSG_ID_COMMAND_LONG) {
                 mavlink_command_long_t commandLong;
                 mavlink_msg_command_long_decode(&msg, &commandLong);
 
                 if (commandLong.command == MAV_CMD_ELEVATOR_GO_TO_FLOOR) {
-                    lmDebug() << "Command MAV_CMD_ELEVATOR_GO_TO_FLOOR received";
+                    lmDebug() << "MAV_CMD_ELEVATOR_GO_TO_FLOOR command received";
                     mCommandHandler.GoToFloorCmdReceived(int(commandLong.param1));
                 }
                 else if (commandLong.command == MAV_CMD_ELEVATOR_CALL_FROM_FLOOR) {
-                    lmDebug() << "Command MAV_CMD_ELEVATOR_CALL_FROM_FLOOR received";
+                    lmDebug() << "MAV_CMD_ELEVATOR_CALL_FROM_FLOOR command received";
                     mCommandHandler.CallFromFloorCmdReceived(int(commandLong.param1));
                 }
             }

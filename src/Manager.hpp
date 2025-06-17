@@ -14,8 +14,8 @@ private:
     void GenerateFloors();
 
 private:
-    std::unique_ptr<Elevator> mElevator;
-    std::unique_ptr<Service>  mService;
-
+    Elevator  mElevator;
     FloorsMap mFloors;
+
+    std::unique_ptr<Service>  mService;
 };

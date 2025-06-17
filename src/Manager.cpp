@@ -11,8 +11,7 @@ Manager::Manager()
     lmInfo() << "ElevatorSystem version: " << PROJECT_VERSION;
 
     GenerateFloors();
-    mElevator.reset(new Elevator());
-    mService.reset(new Service(*mElevator,
+    mService.reset(new Service(mElevator,
                                mFloors));
 }
 
@@ -23,6 +22,6 @@ void Manager::GenerateFloors()
      auto settings = SettingsLoader::GetSettings();
      for (int i = 0; i < settings.floorsCount; ++i)
      {
-         mFloors[i] = std::make_unique<Floor>(Floor(i));
+         mFloors[i] = std::make_unique<Floor>(Floor(i, mElevator));
      }
 }
